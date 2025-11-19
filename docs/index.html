@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HeatRisk Calendar 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>2026 HeatRisk Calendars</h1>
+    <p>Select a city and month to view the color-coded HeatRisk calendar.</p>
+  </header>
+
+  <main class="main">
+    <section class="controls">
+      <div class="control-group">
+        <label for="citySelect">City</label>
+        <select id="citySelect">
+          <!-- Add more cities as you generate them -->
+          <option value="yuma" selected>Yuma</option>
+          <option value="ajo">Ajo</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="monthSelect">Month</label>
+        <select id="monthSelect">
+          <option value="january">January</option>
+          <option value="february">February</option>
+          <option value="march">March</option>
+          <option value="april">April</option>
+          <option value="may">May</option>
+          <option value="june" selected>June</option>
+          <option value="july">July</option>
+          <option value="august">August</option>
+          <option value="september">September</option>
+          <option value="october">October</option>
+          <option value="november">November</option>
+          <option value="december">December</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="yearInput">Year</label>
+        <input id="yearInput" type="number" value="2026" readonly />
+      </div>
+    </section>
+
+    <section class="calendar-view">
+      <div id="calendarContainer" class="calendar-container">
+        <img id="calendarImage" src="" alt="HeatRisk Calendar" />
+        <p id="calendarCaption" class="calendar-caption"></p>
+        <p id="missingMessage" class="missing hidden">
+          Calendar image not found for this city/month. Make sure you've generated and committed
+          <code>city_month_2026.png</code> into <code>docs/img/</code>.
+        </p>
+      </div>
+    </section>
+
+    <section class="legend">
+      <h2>HeatRisk Levels</h2>
+      <ul>
+        <li><span class="box none"></span> 0 – None (Green)</li>
+        <li><span class="box minor"></span> 1 – Minor (Yellow)</li>
+        <li><span class="box moderate"></span> 2 – Moderate (Orange)</li>
+        <li><span class="box major"></span> 3 – Major (Red)</li>
+        <li><span class="box extreme"></span> 4 – Extreme (Magenta)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Powered by NWS HeatRisk data, Python, and GitHub Pages.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Ignore large NWS data locally
+data/*
+!data/.gitkeep
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.env/
+
+# OS junk
+.DS_Store
+Thumbs.db
