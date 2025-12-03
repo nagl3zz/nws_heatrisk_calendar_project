@@ -1,42 +1,120 @@
 const citySelect = document.getElementById("citySelect");
-const monthSelect = document.getElementById("monthSelect");
-const yearInput = document.getElementById("yearInput");
+const yearSelect = document.getElementById("yearSelect");
 const calendarImage = document.getElementById("calendarImage");
 const calendarCaption = document.getElementById("calendarCaption");
 const missingMessage = document.getElementById("missingMessage");
 
-function buildImagePath(citySlug, monthSlug, year) {
-  return `img/${citySlug}_${monthSlug}_${year}.png`;
+const CITIES = window.HEATRISK_CITIES || [];
+
+function buildImagePath(citySlug, yearValue) {
+  // For "avg", we use 2026 as the label year in the filename
+  const labelYear = yearValue === "avg" ? "2026" : yearValue;
+  return `img/${citySlug}_${labelYear}.png`;
+}
+
+function populateCities() {
+  citySelect.innerHTML = "";
+
+  if (!CITIES.length) {
+    const opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "No cities available";
+    citySelect.appendChild(opt);
+    citySelect.disabled = true;
+    yearSelect.disabled = true;
+    return;
+  }
+
+  const sorted = CITIES.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+  sorted.forEach((city, index) => {
+    const opt = document.createElement("option");
+    opt.value = city.slug;
+    opt.textContent = city.name;
+    if (index === 0) opt.selected = true;
+    citySelect.appendChild(opt);
+  });
+
+  citySelect.disabled = false;
+}
+
+function getCityBySlug(slug) {
+  return CITIES.find((c) => c.slug === slug) || null;
+}
+
+function populateYears() {
+  yearSelect.innerHTML = "";
+  const citySlug = citySelect.value;
+  const city = getCityBySlug(citySlug);
+
+  if (!city) {
+    yearSelect.disabled = true;
+    return;
+  }
+
+  // Add data years
+  const years = (city.years || []).slice().sort((a, b) => a - b);
+  years.forEach((y) => {
+    const opt = document.createElement("option");
+    opt.value = String(y);
+    opt.textContent = String(y);
+    yearSelect.appendChild(opt);
+  });
+
+  // Add Average option
+  const avgOpt = document.createElement("option");
+  avgOpt.value = "avg";
+  avgOpt.textContent = "Average";
+  yearSelect.appendChild(avgOpt);
+
+  yearSelect.disabled = false;
+  yearSelect.value = "avg"; // default to Average
 }
 
 function updateCalendar() {
   const citySlug = citySelect.value;
-  const monthSlug = monthSelect.value;
-  const year = yearInput.value || "2026";
+  const yearValue = yearSelect.value;
 
-  const imgPath = buildImagePath(citySlug, monthSlug, year);
+  if (!citySlug || !yearValue) {
+    calendarImage.src = "";
+    calendarCaption.textContent = "No city/year selected.";
+    missingMessage.classList.add("hidden");
+    return;
+  }
 
+  const imgPath = buildImagePath(citySlug, yearValue);
   calendarImage.src = imgPath;
-  calendarImage.alt = `${citySlug} ${monthSlug} ${year} HeatRisk calendar`;
 
   const prettyCity = citySlug
     .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
-  const prettyMonth = monthSlug.charAt(0).toUpperCase() + monthSlug.slice(1);
 
-  calendarCaption.textContent = `${prettyCity} – ${prettyMonth} ${year} HeatRisk Calendar`;
+  let captionLabel;
+  if (yearValue === "avg") {
+    captionLabel = "Average HeatRisk (shown on 2026 calendar layout)";
+  } else {
+    captionLabel = `Year ${yearValue}`;
+  }
 
+  calendarCaption.textContent = `${prettyCity} – ${captionLabel}`;
   missingMessage.classList.add("hidden");
 }
 
+// If the image fails to load, show the warning message
 calendarImage.addEventListener("error", () => {
   missingMessage.classList.remove("hidden");
 });
 
-citySelect.addEventListener("change", updateCalendar);
-monthSelect.addEventListener("change", updateCalendar);
+citySelect.addEventListener("change", () => {
+  populateYears();
+  updateCalendar();
+});
+
+yearSelect.addEventListener("change", updateCalendar);
 
 window.addEventListener("DOMContentLoaded", () => {
+  populateCities();
+  populateYears();
   updateCalendar();
 });

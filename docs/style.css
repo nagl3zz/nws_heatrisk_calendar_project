@@ -21,7 +21,7 @@ body {
 }
 
 .main {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 1.5rem auto;
   padding: 0 1rem 2rem;
 }
@@ -44,12 +44,11 @@ body {
   margin-bottom: 0.25rem;
 }
 
-select,
-input[type="number"] {
+select {
   padding: 0.4rem 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-  min-width: 140px;
+  min-width: 160px;
 }
 
 .calendar-view {
@@ -90,6 +89,8 @@ input[type="number"] {
   display: none;
 }
 
+/* Legend */
+
 .legend {
   margin-top: 2rem;
 }
@@ -122,23 +123,27 @@ input[type="number"] {
 }
 
 .legend .box.none {
-  background: green;
+  background: #d9f4cd;
 }
 
 .legend .box.minor {
-  background: yellow;
+  background: #ffde59;
 }
 
 .legend .box.moderate {
-  background: orange;
+  background: #fd933c;
 }
 
 .legend .box.major {
-  background: red;
+  background: #cc0000;
 }
 
 .legend .box.extreme {
-  background: magenta;
+  background: #8f1eae;
+}
+
+.legend .box.missing {
+  background: #d9d9d9;
 }
 
 .footer {
