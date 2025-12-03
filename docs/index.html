@@ -8,8 +8,8 @@
 </head>
 <body>
   <header class="header">
-    <h1>HeatRisk Calendars – 12-Month Year View</h1>
-    <p>Select a city and a year (or Average) to view the color-coded HeatRisk calendar for all 12 months.</p>
+    <h1>HeatRisk Calendars – 12‑Month View</h1>
+    <p>Select a city and year (or Average) to view the color‑coded HeatRisk calendar for all 12 months.</p>
   </header>
 
   <main class="main">
@@ -18,6 +18,7 @@
         <label for="citySelect">City</label>
         <select id="citySelect"></select>
       </div>
+
       <div class="control-group">
         <label for="yearSelect">Year</label>
         <select id="yearSelect"></select>
@@ -29,33 +30,27 @@
         <img id="calendarImage" src="" alt="HeatRisk Calendar" />
         <p id="calendarCaption" class="calendar-caption"></p>
         <p id="missingMessage" class="missing hidden">
-          Calendar image not found.
+          Calendar image not found for this city/year. Make sure you've generated and committed
+          <code>cityslug_yearlabel.png</code> into <code>docs/img/</code>.
         </p>
       </div>
     </section>
 
     <section class="legend">
-      <h2>
-        HeatRisk Levels
-        <span class="tooltip">ⓘ
-          <span class="tooltiptext">
-            The HeatRisk scale evaluates how unusually hot a day is compared to local climate norms.
-          </span>
-        </span>
-      </h2>
+      <h2>HeatRisk Levels</h2>
       <ul>
         <li><span class="box none"></span> 0 – None (Green – #d9f4cd)</li>
         <li><span class="box minor"></span> 1 – Minor (Yellow – #ffde59)</li>
         <li><span class="box moderate"></span> 2 – Moderate (Orange – #fd933c)</li>
         <li><span class="box major"></span> 3 – Major (Red – #cc0000)</li>
         <li><span class="box extreme"></span> 4 – Extreme (Magenta – #8f1eae)</li>
-        <li><span class="box missing"></span> Missing (Gray – #d9d9d9)</li>
+        <li><span class="box missing"></span> Missing data (Light gray – #d9d9d9)</li>
       </ul>
     </section>
   </main>
 
   <footer class="footer">
-    <p>Powered by NWS HeatRisk</p>
+    <p>Powered by NWS HeatRisk data, Python, and GitHub Pages.</p>
   </footer>
 
   <script src="cities.js"></script>
