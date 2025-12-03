@@ -1,0 +1,20 @@
+HeatRisk Calendars – 12‑Month View
+Select a city and year (or Average) to view the color‑coded HeatRisk calendar for all 12 months.
+City 
+        Yuma
+        Ajo
+        Tucson Airport
+        Jerome
+        Sanders
+         
+Year
+
+Calendar image not found for this city/year. Make sure you've generated and committed cityslug_yearlabel.png into docs/img/.
+HeatRisk Levels
+	•	0 – None (Green – #d9f4cd)
+	•	1 – Minor (Yellow – #ffde59)
+	•	2 – Moderate (Orange – #fd933c)
+	•	3 – Major (Red – #cc0000)
+	•	4 – Extreme (Magenta – #8f1eae)
+	•	Missing data (Light gray – #d9d9d9)
+Powered by NWS HeatRisk data, Python, and GitHub Pages.
