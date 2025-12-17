@@ -201,11 +201,15 @@ def write_manifest(stations: list[dict], out_path: Path):
     lines = ["window.HEATRISK_STATIONS = ["]
     for s in stations:
         years_str = ", ".join(str(y) for y in s["years"])
-        safe_name = s["name"].replace('"', '\"')
-        lines.append(f'  {{ id: "{s["id"]}", name: "{safe_name}", years: [{years_str}] }},')
+        safe_name = (s.get("name") or "").replace('"', '\\"')
+        safe_state = (s.get("state") or "").replace('"', '\\"')
+        lines.append(
+            f'  {{ id: "{s["id"]}", name: "{safe_name}", state: "{safe_state}", years: [{years_str}] }},'
+        )
     lines.append("];")
     out_path.write_text("\n".join(lines), encoding="utf-8")
     print(f"Wrote manifest: {out_path}")
+
 
 
 def main():
