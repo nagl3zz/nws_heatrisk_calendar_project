@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HeatRisk Calendar – Station Year View</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <h1>NWS HeatRisk Calendars</h1>
+    <p>Select a station and a year (or Average). Each view shows all 12 months.</p>
+  </header>
+
+  <main class="main">
+    <section class="controls">
+      <div class="control-group">
+        <label for="stationSelect">Station</label>
+        <select id="stationSelect"></select>
+      </div>
+
+      <div class="control-group">
+        <label for="yearSelect">Year</label>
+        <select id="yearSelect"></select>
+      </div>
+    </section>
+
+    <section class="calendar-view">
+      <div class="calendar-container">
+        <img id="calendarImage" src="" alt="HeatRisk Calendar" />
+        <p id="calendarCaption" class="calendar-caption"></p>
+
+        <p id="missingMessage" class="missing hidden">
+          Calendar image not found for this station/year. Make sure you've generated and committed
+          <code>docs/img/&lt;STATION_ID&gt;_&lt;YEAR&gt;.png</code>.
+        </p>
+      </div>
+    </section>
+
+    <section class="legend">
+      <h2>
+        HeatRisk Scale
+        <span class="tooltip">ⓘ
+          <span class="tooltiptext">
+            HeatRisk is an experimental NWS scale that summarizes potential heat impacts.
+            Values range from 0 (None) to 4 (Extreme). Gray indicates missing data.
+            “Average” is computed across all available years and shown on a 2026 calendar layout.
+          </span>
+        </span>
+      </h2>
+
+      <div class="legend-grid">
+        <div class="legend-item"><span class="box none"></span><span>0 – None</span></div>
+        <div class="legend-item"><span class="box minor"></span><span>1 – Minor</span></div>
+        <div class="legend-item"><span class="box moderate"></span><span>2 – Moderate</span></div>
+        <div class="legend-item"><span class="box major"></span><span>3 – Major</span></div>
+        <div class="legend-item"><span class="box extreme"></span><span>4 – Extreme</span></div>
+        <div class="legend-item"><span class="box missing"></span><span>Missing</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>GitHub Pages – /docs</p>
+  </footer>
+
+  <script src="stations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
