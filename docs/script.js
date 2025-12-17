@@ -1,59 +1,57 @@
-const citySelect = document.getElementById("citySelect");
+const stationSelect = document.getElementById("stationSelect");
 const yearSelect = document.getElementById("yearSelect");
 const calendarImage = document.getElementById("calendarImage");
 const calendarCaption = document.getElementById("calendarCaption");
 const missingMessage = document.getElementById("missingMessage");
 
-const CITIES = window.HEATRISK_CITIES || [];
+const STATIONS = window.HEATRISK_STATIONS || [];
 
-function buildImagePath(citySlug, yearValue) {
-  // For "avg", we use 2026 as the label year in the filename
+function buildImagePath(stationId, yearValue) {
   const labelYear = yearValue === "avg" ? "2026" : yearValue;
-  return `img/${citySlug}_${labelYear}.png`;
+  return `img/${stationId}_${labelYear}.png`;
 }
 
-function populateCities() {
-  citySelect.innerHTML = "";
+function populateStations() {
+  stationSelect.innerHTML = "";
 
-  if (!CITIES.length) {
+  if (!STATIONS.length) {
     const opt = document.createElement("option");
     opt.value = "";
-    opt.textContent = "No cities available";
-    citySelect.appendChild(opt);
-    citySelect.disabled = true;
+    opt.textContent = "No stations found (run generator)";
+    stationSelect.appendChild(opt);
+    stationSelect.disabled = true;
     yearSelect.disabled = true;
     return;
   }
 
-  const sorted = CITIES.slice().sort((a, b) => a.name.localeCompare(b.name));
+  const sorted = STATIONS.slice().sort((a, b) => a.name.localeCompare(b.name));
 
-  sorted.forEach((city, index) => {
+  sorted.forEach((s, idx) => {
     const opt = document.createElement("option");
-    opt.value = city.slug;
-    opt.textContent = city.name;
-    if (index === 0) opt.selected = true;
-    citySelect.appendChild(opt);
+    opt.value = s.id;
+    opt.textContent = `${s.name} (${s.id})`;
+    if (idx === 0) opt.selected = true;
+    stationSelect.appendChild(opt);
   });
 
-  citySelect.disabled = false;
+  stationSelect.disabled = false;
 }
 
-function getCityBySlug(slug) {
-  return CITIES.find((c) => c.slug === slug) || null;
+function getStationById(id) {
+  return STATIONS.find((s) => s.id === id) || null;
 }
 
 function populateYears() {
   yearSelect.innerHTML = "";
-  const citySlug = citySelect.value;
-  const city = getCityBySlug(citySlug);
+  const stationId = stationSelect.value;
+  const station = getStationById(stationId);
 
-  if (!city) {
+  if (!station) {
     yearSelect.disabled = true;
     return;
   }
 
-  // Add data years
-  const years = (city.years || []).slice().sort((a, b) => a - b);
+  const years = (station.years || []).slice().sort((a, b) => a - b);
   years.forEach((y) => {
     const opt = document.createElement("option");
     opt.value = String(y);
@@ -61,52 +59,41 @@ function populateYears() {
     yearSelect.appendChild(opt);
   });
 
-  // Add Average option
   const avgOpt = document.createElement("option");
   avgOpt.value = "avg";
-  avgOpt.textContent = "Average";
+  avgOpt.textContent = "Average (shown on 2026 layout)";
   yearSelect.appendChild(avgOpt);
 
+  yearSelect.value = "avg";
   yearSelect.disabled = false;
-  yearSelect.value = "avg"; // default to Average
 }
 
 function updateCalendar() {
-  const citySlug = citySelect.value;
+  const stationId = stationSelect.value;
   const yearValue = yearSelect.value;
 
-  if (!citySlug || !yearValue) {
+  if (!stationId || !yearValue) {
     calendarImage.src = "";
-    calendarCaption.textContent = "No city/year selected.";
+    calendarCaption.textContent = "";
     missingMessage.classList.add("hidden");
     return;
   }
 
-  const imgPath = buildImagePath(citySlug, yearValue);
+  const station = getStationById(stationId);
+  const imgPath = buildImagePath(stationId, yearValue);
   calendarImage.src = imgPath;
 
-  const prettyCity = citySlug
-    .split("_")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+  const label = yearValue === "avg" ? "Average (2026 layout)" : `Year ${yearValue}`;
+  calendarCaption.textContent = station ? `${station.name} (${station.id}) — ${label}` : `${stationId} — ${label}`;
 
-  let captionLabel;
-  if (yearValue === "avg") {
-    captionLabel = "Average HeatRisk (shown on 2026 calendar layout)";
-  } else {
-    captionLabel = `Year ${yearValue}`;
-  }
-
-  calendarCaption.textContent = `${prettyCity} – ${captionLabel}`;
   missingMessage.classList.add("hidden");
 }
 
-// If the image fails to load, show the warning message
 calendarImage.addEventListener("error", () => {
   missingMessage.classList.remove("hidden");
 });
 
-citySelect.addEventListener("change", () => {
+stationSelect.addEventListener("change", () => {
   populateYears();
   updateCalendar();
 });
@@ -114,7 +101,7 @@ citySelect.addEventListener("change", () => {
 yearSelect.addEventListener("change", updateCalendar);
 
 window.addEventListener("DOMContentLoaded", () => {
-  populateCities();
+  populateStations();
   populateYears();
   updateCalendar();
 });

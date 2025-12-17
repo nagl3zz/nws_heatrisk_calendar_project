@@ -1,54 +1,55 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: #f5f5f5;
   color: #222;
 }
 
 .header {
-  text-align: center;
   padding: 1.5rem 1rem;
+  text-align: center;
   background: #1f2933;
   color: #fff;
 }
 
-.header h1 {
-  margin: 0 0 0.25rem;
-}
+.header h1 { margin: 0 0 0.25rem; }
+.header p { margin: 0; opacity: 0.9; }
 
 .main {
   max-width: 1200px;
-  margin: 1.5rem auto;
+  margin: 1.25rem auto;
   padding: 0 1rem 2rem;
 }
 
 .controls {
   display: flex;
-  flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
   align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .control-group {
   display: flex;
   flex-direction: column;
+  min-width: 260px;
 }
 
 .control-group label {
   font-size: 0.9rem;
   margin-bottom: 0.25rem;
+  color: #333;
 }
 
 select {
-  padding: 0.4rem 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  min-width: 160px;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid #cfd6dd;
+  background: #fff;
+  font-size: 0.95rem;
 }
 
 .calendar-view {
@@ -57,98 +58,134 @@ select {
 }
 
 .calendar-container {
+  width: 100%;
   background: #fff;
+  border-radius: 16px;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  max-width: 100%;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
 }
 
 #calendarImage {
-  max-width: 100%;
-  height: auto;
   display: block;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
 }
 
 .calendar-caption {
   text-align: center;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin: 0.6rem 0 0;
   color: #555;
 }
 
 .missing {
-  margin-top: 0.75rem;
-  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.75rem 0 0;
   color: #b00020;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Legend */
-
-.legend {
-  margin-top: 2rem;
-}
-
-.legend h2 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.legend ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.legend li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
   font-size: 0.9rem;
 }
 
-.legend .box {
-  display: inline-block;
+.hidden { display: none; }
+
+.legend {
+  margin-top: 1.5rem;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.legend h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.box {
   width: 18px;
   height: 18px;
-  border-radius: 3px;
-  border: 1px solid #555;
+  border-radius: 6px;
+  border: 1px solid #222;
 }
 
-.legend .box.none {
-  background: #d9f4cd;
-}
-
-.legend .box.minor {
-  background: #ffde59;
-}
-
-.legend .box.moderate {
-  background: #fd933c;
-}
-
-.legend .box.major {
-  background: #cc0000;
-}
-
-.legend .box.extreme {
-  background: #8f1eae;
-}
-
-.legend .box.missing {
-  background: #d9d9d9;
-}
+/* Requested color codes */
+.none { background: #d9f4cd; }
+.minor { background: #ffde59; }
+.moderate { background: #fd933c; }
+.major { background: #cc0000; }
+.extreme { background: #8f1eae; }
+.missingBox { background: #d9d9d9; }
+.box.missing { background: #d9d9d9; }
 
 .footer {
   text-align: center;
   padding: 1rem;
-  font-size: 0.8rem;
   color: #666;
+  font-size: 0.85rem;
+}
+
+/* Tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background: #111;
+  color: #fff;
+  text-align: left;
+  border-radius: 10px;
+  padding: 10px 12px;
+  position: absolute;
+  z-index: 20;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #111 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip:active .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .control-group { min-width: 100%; }
+  .legend-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
