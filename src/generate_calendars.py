@@ -42,7 +42,7 @@ def categorize_risk(value: float) -> float:
 def load_metadata(path: Path) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"Metadata CSV not found: {path}")
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, sep=None, engine="python")
     # Expected columns from your sample: GHCN, NAME, STATE, LATITUDE, LONGITUDE
     # We'll normalize to: station_id, name, state
     cols = {c.upper(): c for c in df.columns}
